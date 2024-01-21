@@ -33,7 +33,6 @@ const ProductDetails = () => {
 
           console.log(productData);
           setProduct(productData);
-
         });
       }
     }
