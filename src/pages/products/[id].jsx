@@ -23,21 +23,21 @@ const ProductDetails = () => {
   };
 
   useEffect(() => {
-    const getProductInformation = (id) => {
-      if (id) {
-        axios.get(`https://dummyjson.com/products/${id}`).then(product => {
-          const productData = {
-            ...product.data,
-            currency: 'USD',
-          }
+    const fetchProduct = async () => {
+      try {
+        const response = await axios.get(`https://dummyjson.com/products/${id}`);
+        const productRes = {
+          ...response.data,
+          currency: 'USD'
+        }
 
-          console.log(productData);
-          setProduct(productData);
-        });
+        setProduct(productRes);
+      } catch (error) {
+        console.error(error);
       }
     }
-
-    getProductInformation(id);
+    
+    fetchProduct(id);
   }, [id]);
 
   const loadPaymentForm = async (event) => {
