@@ -4,16 +4,23 @@ import {useRouter} from "next/router";
 import axios from "axios";
 import {Elements} from "@stripe/react-stripe-js";
 import CheckoutForm from "@/components/CheckoutForm";
-import {Inter} from "next/font/google";
+import {createPaymentIntent} from "@/utils/paymentIntent.service";
+import {getPublishableKey} from "@/utils/stripe.service";
 
-const inter = Inter({subsets: ["latin"]});
 const ProductDetails = () => {
   const [loading, setLoading] = useState(false);
+  const [clientSecret, setClientSecret] = useState("");
   const [product, setProduct] = useState({});
   const [loadStripeComponent, setLoadStripeComponent] = useState(false);
 
+  const stripePromise = getPublishableKey();
+
   const router = useRouter();
   const {id} = router.query;
+
+  const options = {
+    clientSecret,
+  };
 
   useEffect(() => {
     const getProductInformation = (id) => {
@@ -26,6 +33,7 @@ const ProductDetails = () => {
 
           console.log(productData);
           setProduct(productData);
+
         });
       }
     }
@@ -33,8 +41,22 @@ const ProductDetails = () => {
     getProductInformation(id);
   }, [id]);
 
-  const handlePayment = (event) => {
+  const loadPaymentForm = async (event) => {
     event.preventDefault();
+    const paymentIntentInfo = localStorage.getItem(`pi_${product.id}`);
+    console.log(paymentIntentInfo);
+    if (!paymentIntentInfo) {
+      const paymentIntent = await createPaymentIntent(product);
+      console.log(JSON.stringify(paymentIntent.data));
+      localStorage.setItem(`pi_${product.id}`, JSON.stringify(paymentIntent.data));
+      setClientSecret(paymentIntent.data.client_secret);
+    } else {
+      const data = JSON.parse(paymentIntentInfo);
+      console.log(data);
+      setClientSecret(data.client_secret);
+    }
+
+    /// The payment form needs to be waited until the Payment Intent is created.
     setLoading(true);
     setLoadStripeComponent((oldValue) => !oldValue);
     setLoading(false);
@@ -42,7 +64,7 @@ const ProductDetails = () => {
 
   return (
     <div>
-      <section className="text-gray-700 body-font overflow-hidden bg-white">
+      <section className="text-gray-700 body-font overflow-hidden">
         <div className="container px-5 py-24 mx-auto">
           <div className="lg:w-4/5 mx-auto flex flex-wrap">
             <img alt="ecommerce"
@@ -112,7 +134,7 @@ const ProductDetails = () => {
                 <button
                   // className="flex ml-auto text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded"
                   className="flex ml-auto bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
-                  onClick={handlePayment}
+                  onClick={loadPaymentForm}
                   disabled={loading}
                 >
                   Pay with Stripe
@@ -139,7 +161,7 @@ const ProductDetails = () => {
               className="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-600 md:text-5xl lg:text-4xl text-center">
               Lets make a payment
             </h2>
-            <CheckoutForm product={product} clientSecret={clientSecret}/>
+            <CheckoutForm product={product}/>
           </Elements>
         }
       </section>
