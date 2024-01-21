@@ -42,24 +42,28 @@ const ProductDetails = () => {
   }, [id]);
 
   const loadPaymentForm = async (event) => {
-    event.preventDefault();
-    const paymentIntentInfo = localStorage.getItem(`pi_${product.id}`);
-    console.log(paymentIntentInfo);
-    if (!paymentIntentInfo) {
-      const paymentIntent = await createPaymentIntent(product);
-      console.log(JSON.stringify(paymentIntent.data));
-      localStorage.setItem(`pi_${product.id}`, JSON.stringify(paymentIntent.data));
-      setClientSecret(paymentIntent.data.client_secret);
-    } else {
-      const data = JSON.parse(paymentIntentInfo);
-      console.log(data);
-      setClientSecret(data.client_secret);
-    }
-
-    /// The payment form needs to be waited until the Payment Intent is created.
     setLoading(true);
-    setLoadStripeComponent((oldValue) => !oldValue);
-    setLoading(false);
+    const secDelay = loadStripeComponent ? 0 : 1000;
+    setTimeout(async () => {
+      console.log('waiting');
+      event.preventDefault();
+      const paymentIntentInfo = localStorage.getItem(`pi_${product.id}`);
+      console.log(paymentIntentInfo);
+      if (!paymentIntentInfo) {
+        const paymentIntent = await createPaymentIntent(product);
+        console.log(JSON.stringify(paymentIntent.data));
+        localStorage.setItem(`pi_${product.id}`, JSON.stringify(paymentIntent.data));
+        setClientSecret(paymentIntent.data.client_secret);
+      } else {
+        const data = JSON.parse(paymentIntentInfo);
+        console.log(data);
+        setClientSecret(data.client_secret);
+      }
+
+      /// The payment form needs to be waited until the Payment Intent is created.
+      setLoadStripeComponent((oldValue) => !oldValue);
+      setLoading(false);
+    }, secDelay);
   }
 
   return (
@@ -129,24 +133,26 @@ const ProductDetails = () => {
               </div>
               <p className="leading-relaxed">{product.description}</p>
               <div className="flex mt-5">
-                  <span
-                    className="title-font font-medium text-2xl text-gray-900">{`${product.currency} ${product.price}`}</span>
-                <button
-                  // className="flex ml-auto text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded"
-                  className="flex ml-auto bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
-                  onClick={loadPaymentForm}
-                  disabled={loading}
-                >
-                  Pay with Stripe
-                </button>
-                <button
-                  className="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4"
-                >
-                  <svg fill="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
-                       className="w-5 h-5" viewBox="0 0 24 24">
-                    <path
-                      d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"></path>
-                  </svg>
+                <span className="title-font font-medium text-2xl text-gray-900">
+                  {`${product.currency} ${product.price}`}
+                </span>
+                <button type="button"
+                        onClick={loadPaymentForm}
+                        className={`flex items-center ml-auto px-4 py-2 text-sm font-semibold leading-6 text-white transition duration-150 ease-in-out bg-blue-500 rounded-md shadow hover:bg-blue-400`}
+                        disabled={loading}>
+                  {
+                    loading &&
+                    <svg className="w-5 h-5 mr-3 -ml-1 text-white animate-spin"
+                         fill="none"
+                         viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
+                              strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor"
+                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                      </path>
+                    </svg>
+                  }
+                  {loading ? 'Loading' : 'Pay with Stripe'}
                 </button>
               </div>
             </div>
