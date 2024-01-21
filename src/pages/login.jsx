@@ -1,5 +1,4 @@
 import Image from "next/image";
-import "@/app/globals.css";
 export default function Login() {
   return (
     <div className="flex flex-col items-center md:flex-row md:h-screen">

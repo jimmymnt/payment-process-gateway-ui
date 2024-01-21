@@ -1,7 +1,6 @@
 "use client";
 import React, {useEffect, useState} from 'react';
 import {useRouter} from "next/router";
-import "@/app/globals.css";
 import axios from "axios";
 import {Elements} from "@stripe/react-stripe-js";
 import CheckoutForm from "@/components/CheckoutForm";
