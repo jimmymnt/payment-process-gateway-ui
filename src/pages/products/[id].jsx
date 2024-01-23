@@ -23,39 +23,37 @@ const ProductDetails = () => {
   };
 
   useEffect(() => {
-    const fetchProduct = async () => {
+    const fetchProduct = async (id) => {
       try {
-        const response = await axios.get(`https://dummyjson.com/products/${id}`);
-        const productRes = {
-          ...response.data,
-          currency: 'USD'
-        }
+        if (id) {
+          const response = await axios.get(`https://dummyjson.com/products/${id}`);
+          const productRes = {
+            ...response.data,
+            currency: 'USD'
+          }
 
-        setProduct(productRes);
+          setProduct(productRes);
+        }
       } catch (error) {
         console.error(error);
       }
     }
     
-    fetchProduct(id);
+    fetchProduct(id).then(r => {});
   }, [id]);
 
   const loadPaymentForm = async (event) => {
     setLoading(true);
     const secDelay = loadStripeComponent ? 0 : 1000;
     setTimeout(async () => {
-      console.log('waiting');
       event.preventDefault();
       const paymentIntentInfo = localStorage.getItem(`pi_${product.id}`);
-      console.log(paymentIntentInfo);
       if (!paymentIntentInfo) {
         const paymentIntent = await createPaymentIntent(product);
-        console.log(JSON.stringify(paymentIntent.data));
         localStorage.setItem(`pi_${product.id}`, JSON.stringify(paymentIntent.data));
         setClientSecret(paymentIntent.data.client_secret);
       } else {
         const data = JSON.parse(paymentIntentInfo);
-        console.log(data);
         setClientSecret(data.client_secret);
       }
 

@@ -6,7 +6,6 @@ const CheckoutForm = (props) => {
   const [loading, setLoading] = useState(false);
   const stripe = useStripe();
   const elements = useElements();
-  console.log(product.id);
   const handlePayment = async (event) => {
     // We don't want to let default form submission happen here,
     // which would refresh the page.
@@ -47,7 +46,7 @@ const CheckoutForm = (props) => {
         margin: 'auto',
       }} onSubmit={handlePayment}>
         <PaymentElement/>
-        <button type="button"
+        <button type="submit"
                 className={`my-4 w-full ml-auto px-4 py-2 text-sm font-semibold leading-6 text-white transition duration-150 ease-in-out bg-blue-500 rounded-md shadow hover:bg-blue-400`}
                 disabled={loading}>
           {
