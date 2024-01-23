@@ -4,7 +4,7 @@ import Menu from '@/components/Menu';
 
 const inter = Inter({subsets: ['latin']});
 
-function MyApp({Component, pageProps}) {
+function Application({Component, pageProps}) {
   return (
     <div className={inter.className}>
       <Menu/>
@@ -13,4 +13,4 @@ function MyApp({Component, pageProps}) {
   );
 }
 
-export default MyApp;
+export default Application;

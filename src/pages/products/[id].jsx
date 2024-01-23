@@ -1,46 +1,36 @@
-"use client";
-import React, {useEffect, useState} from 'react';
-import {useRouter} from "next/router";
+import React, {useState} from 'react';
 import axios from "axios";
 import {Elements} from "@stripe/react-stripe-js";
 import CheckoutForm from "@/components/CheckoutForm";
 import {createPaymentIntent} from "@/utils/paymentIntent.service";
 import {getPublishableKey} from "@/utils/stripe.service";
 
-const ProductDetails = () => {
+export async function getServerSideProps(context) {
+  const {params} = context;
+  const {id} = params;
+  const response = await axios.get(`https://dummyjson.com/products/${id}`);
+  const product = {
+    ...response.data,
+    currency: 'USD'
+  }
+  return {
+    props: {
+      product: product
+    }
+  }
+
+}
+
+const ProductDetails = ({product}) => {
   const [loading, setLoading] = useState(false);
   const [clientSecret, setClientSecret] = useState("");
-  const [product, setProduct] = useState({});
   const [loadStripeComponent, setLoadStripeComponent] = useState(false);
 
   const stripePromise = getPublishableKey();
 
-  const router = useRouter();
-  const {id} = router.query;
-
   const options = {
     clientSecret,
   };
-
-  useEffect(() => {
-    const fetchProduct = async (id) => {
-      try {
-        if (id) {
-          const response = await axios.get(`https://dummyjson.com/products/${id}`);
-          const productRes = {
-            ...response.data,
-            currency: 'USD'
-          }
-
-          setProduct(productRes);
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    }
-    
-    fetchProduct(id).then(r => {});
-  }, [id]);
 
   const loadPaymentForm = async (event) => {
     setLoading(true);
@@ -72,7 +62,7 @@ const ProductDetails = () => {
                  className="lg:w-1/2 w-full object-cover object-center rounded border border-gray-200"
                  src={product.thumbnail}/>
             <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
-              <h2 className="text-sm title-font text-gray-500 tracking-widest">BRAND NAME</h2>
+              <h2 className="text-sm title-font text-gray-500 tracking-widest">{product.brand}</h2>
               <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">
                 {product.title}
               </h1>
