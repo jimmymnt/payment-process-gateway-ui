@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from "next/link";
 
-const Pagination = ({postsPerPage, totalPosts, currentPage}) => {
+const Pagination = ({paginate, postsPerPage, totalPosts, currentPage}) => {
   const pageNumbers = [];
 
   for (let i = 1; i <= Math.ceil(totalPosts / postsPerPage); i++) {
@@ -19,6 +19,7 @@ const Pagination = ({postsPerPage, totalPosts, currentPage}) => {
                     <Link
                       key={number}
                       href={`/products/page/${number}`}
+                      onClick={paginate}
                       className={
                         parseInt(currentPage) === number
                           ? "bg-blue border-blue-300 bg-blue-200 text-blue-500 hover:bg-blue-200 relative inline-flex items-center px-4 py-2 border text-sm font-medium"
