@@ -10,7 +10,7 @@ function Application({Component, pageProps}) {
     <div className={`${inter.className}`}>
       <Menu/>
       <Component {...pageProps} />
-      <Footer/>
+      {/*<Footer/>*/}
     </div>
   );
 }
