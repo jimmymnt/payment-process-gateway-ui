@@ -6,8 +6,8 @@ const Index = () => {
 
   useEffect(() => {
     axios.get(`https://dummyjson.com/products?limit=10`).then(res => {
-      console.log(res.data);
-      setProducts(res.data.products);
+      const {products} = res.data;
+      setProducts(products);
     });
   }, []);
 
