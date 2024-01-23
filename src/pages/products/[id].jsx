@@ -13,12 +13,12 @@ export async function getServerSideProps(context) {
     ...response.data,
     currency: 'USD'
   }
+
   return {
     props: {
       product: product
     }
   }
-
 }
 
 const ProductDetails = ({product}) => {
@@ -119,6 +119,9 @@ const ProductDetails = ({product}) => {
                   </span>
               </div>
               <p className="leading-relaxed">{product.description}</p>
+              <div className="my-4">
+                <p>In stock: {product.stock}</p>
+              </div>
               <div className="flex mt-5">
                 <span className="title-font font-medium text-2xl text-gray-900">
                   {`${product.currency} ${product.price}`}
