@@ -31,7 +31,7 @@ Thanks go to these wonderful people:
 <table>
   <tbody>
     <tr>
-      <td align="center" valign="top" width="14.28%"><a href="https://kentcdodds.com">
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/nhatlinhle" target="_blank">
         <img src="https://avatars.githubusercontent.com/u/54565060?v=4?s=100" width="100px;" alt="Kent C. Dodds"/>
         <br />
         <sub><b>David Linh</b></sub></a><br />
