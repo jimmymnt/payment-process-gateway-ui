@@ -1,42 +1,115 @@
-import Image from "next/image";
+import {useState} from "react";
+import axios from "axios";
 
 export default function Login() {
-  return (
-    <div className="bg-blue-500   ">
-      <div className="flex justify-center container mx-auto my-auto w-screen h-screen items-center flex-col">
-        <div className="text-slate-100 items-center">
-          <svg className="w-10 h-10 mx-auto pb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-               xmlns="http://www.w3.org/2000/svg">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
-                  d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-          </svg>
-          <div className="text-center pb-3">Welcome back!</div>
-        </div>
+  const [email, setEmail] = useState('');
+  const [error, setError] = useState('');
+  const [password, setPassword] = useState('');
+  const handleLogin = async (event) => {
+    event.preventDefault();
+    setError('');
 
-        <div className="w-full md:w-3/4  lg:w-1/2 flex flex-col items-center bg-slate-50 rounded-md pt-12">
-          <div className="w-3/4 mb-6">
-            <input type="email" name="email" id="email"
-                   className="w-full py-4 px-8 bg-slate-200 placeholder:font-semibold rounded hover:ring-1 hover:ring-gray-600 outline-slate-500 border-solid border-2 border-slate-300"
-                   placeholder="Email adress"/>
-          </div>
-          <div className="w-3/4 mb-6">
-            <input type="password" name="password" id="password"
-                   className="w-full py-4 px-8 bg-slate-200 placeholder:font-semibold rounded hover:ring-1 hover:ring-gray-600 outline-slate-500  border-solid border-2 border-slate-300"
-                   placeholder="Password"/>
-          </div>
-          <div className="w-3/4 mb-12">
-            <button type="submit"
-                    className="py-4 bg-blue-500 w-full rounded text-blue-50 font-bold hover:bg-blue-700"> LOGIN
-            </button>
+    if (email === '') {
+      setError('Email field can not be empty');
+      return;
+    }
+
+    if (password === '') {
+      setError('Password field can not be empty');
+      return;
+    }
+
+    try {
+      const response = await axios.post('https://dummyjson.com/auth/login', {
+        username: email,
+        password,
+      });
+
+      console.log(response);
+    } catch (error) {
+      console.log(`ERR:`, error.response.data.message);
+      setError(error.response.data.message);
+    }
+  }
+  return (
+    <div className="">
+      <section className="bg-gray-50">
+        <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+          <a href="#" className="flex items-center mb-6 text-2xl font-semibold text-gray-900">
+            JJ Shop
+          </a>
+          <div
+            className="w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0:border-gray-700">
+            <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
+              <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">
+                Sign in to your account
+              </h1>
+              <form className="space-y-4 md:space-y-6" action="#" onSubmit={handleLogin}>
+                {
+                  error &&
+                  <div
+                    className="mb-6 flex items-center p-4 text-sm text-red-800 rounded-lg bg-red-50"
+                    role="alert">
+                    <svg className="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true"
+                         xmlns="http://www.w3.org/2000/svg"
+                         fill="currentColor" viewBox="0 0 20 20">
+                      <path
+                        d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+                    </svg>
+                    <span className="sr-only">Info</span>
+                    <div>
+                      {error}
+                    </div>
+                  </div>
+                }
+                <div>
+                  <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900">Your
+                    email</label>
+                  <input type="email"
+                         onChange={(event) => setEmail(event.target.value)}
+                         name="email" id="email"
+                         className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                         placeholder="name@company.com" required=""/>
+                </div>
+                <div>
+                  <label htmlFor="password"
+                         className="block mb-2 text-sm font-medium text-gray-900">Password</label>
+                  <input type="password"
+                         name="password"
+                         id="password"
+                         onChange={(event) => setPassword(event.target.value)}
+                         placeholder="••••••••"
+                         className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                         required=""/>
+                </div>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-start">
+                    <div className="flex items-center h-5">
+                      <input id="remember" aria-describedby="remember" type="checkbox"
+                             className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300"
+                             required=""/>
+                    </div>
+                    <div className="ml-3 text-sm">
+                      <label htmlFor="remember" className="text-gray-500">Remember me</label>
+                    </div>
+                  </div>
+                  <a href="#" className="text-sm font-medium text-primary-600 hover:underline">Forgot
+                    password?</a>
+                </div>
+                <button type="submit"
+                        className="my-4 w-full ml-auto px-4 py-2 text-sm font-semibold leading-6 text-white transition duration-150 ease-in-out bg-blue-500 rounded-md shadow hover:bg-blue-40">
+                  Sign in
+                </button>
+                <p className="text-sm font-light text-gray-500">
+                  Don’t have an account yet?
+                  <a href="#"
+                     className="font-medium text-primary-600 hover:underline">Sign up</a>
+                </p>
+              </form>
+            </div>
           </div>
         </div>
-        <div className="flex justify-center container mx-auto mt-6 text-slate-100 text-sm">
-          <div className="flex flex-col sm:flex-row  justify-between md:w-1/2 items-center">
-            <div className="flex">Forgot your password</div>
-            <div className="flex ">Don't have an account? Get Started</div>
-          </div>
-        </div>
-      </div>
+      </section>
     </div>
   );
 }
