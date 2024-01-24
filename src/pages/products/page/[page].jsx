@@ -36,11 +36,11 @@ const Page = ({products, total, limit}) => {
 
   return (
     <>
-      <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
+      <div className="mx-auto max-w-2xl px-4 py-14 sm:px-6 sm:py-14 lg:max-w-7xl lg:px-8">
         <SearchProducts/>
         <Loading loading={loading}>
           <div
-            className="grid grid-cols-1 gap-x-6 gap-y-10 mt-10 mb-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
+            className="items-center my-8 p-6 bg-white border border-gray-100 rounded-lg shadow-md grid grid-cols-1 gap-x-6 gap-y-10 mt-10 mb-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
             {
               products && products.map(product => {
                 return (
