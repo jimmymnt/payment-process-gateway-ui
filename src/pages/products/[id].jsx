@@ -1,27 +1,15 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import axios from "axios";
 import {Elements} from "@stripe/react-stripe-js";
 import CheckoutForm from "@/components/CheckoutForm";
 import {createPaymentIntent} from "@/utils/paymentIntent.service";
 import {getPublishableKey} from "@/utils/stripe.service";
+import {useRouter} from "next/router";
 
-export async function getServerSideProps(context) {
-  const {params} = context;
-  const {id} = params;
-  const response = await axios.get(`https://dummyjson.com/products/${id}`);
-  const product = {
-    ...response.data,
-    currency: 'USD'
-  }
-
-  return {
-    props: {
-      product: product
-    }
-  }
-}
-
-const ProductDetails = ({product}) => {
+const ProductDetails = () => {
+  const router = useRouter();
+  const {id} = router.query;
+  const [product, setProduct] = useState({});
   const [loading, setLoading] = useState(false);
   const [clientSecret, setClientSecret] = useState("");
   const [loadStripeComponent, setLoadStripeComponent] = useState(false);
@@ -52,6 +40,26 @@ const ProductDetails = ({product}) => {
       setLoading(false);
     }, secDelay);
   }
+
+  useEffect(() => {
+    const fetchProduct = async (id) => {
+      try {
+        if (id) {
+          const response = await axios.get(`https://dummyjson.com/products/${id}`);
+          const productRes = {
+            ...response.data,
+            currency: 'USD'
+          }
+
+          setProduct(productRes);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    fetchProduct(id).then();
+  }, [id]);
 
   return (
     <div>
