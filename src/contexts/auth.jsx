@@ -3,10 +3,12 @@
 import React, {createContext, useState, useContext, useEffect} from 'react'
 import api from "@/utils/Api";
 import {useRouter} from "next/router";
+import {useSearchParams} from "next/navigation";
 
 const AuthContext = createContext({});
 
 export const AuthProvider = ({children}) => {
+  const params = useSearchParams()
   const router = useRouter();
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -38,7 +40,6 @@ export const AuthProvider = ({children}) => {
   }, [])
 
   const login = async (email, password) => {
-    console.log(email, password);
     try {
       const response = await api.post('/auth/login', {username: email, password})
       const {token} = response.data;
@@ -46,11 +47,12 @@ export const AuthProvider = ({children}) => {
         console.log("Got Token:", token);
         localStorage.setItem('token', token)
         api.defaults.headers.Authorization = `Bearer ${token}`
-        const {data: user} = await api.get('/auth/me')
+        const {data: user} = await api.get('/auth/me');
         setUser(user);
         console.log("Got user", user);
+        const returnUrl = params.get('returnUrl');
         await router.push({
-          pathname: '/'
+          pathname: returnUrl
         });
       } else {
         await router.push({
