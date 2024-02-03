@@ -18,7 +18,9 @@ function Application({Component, pageProps}) {
         <AuthProvider>
           <ProtectRoute>
             <Menu/>
-            <Component {...pageProps} />
+            <div className="max-w-screen-xl mx-auto px-4">
+              <Component {...pageProps} />
+            </div>
             <Footer/>
           </ProtectRoute>
         </AuthProvider>

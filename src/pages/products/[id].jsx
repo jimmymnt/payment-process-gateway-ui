@@ -1,18 +1,21 @@
 import React, {useEffect, useState} from 'react';
-import axios from "axios";
 import {Elements} from "@stripe/react-stripe-js";
 import CheckoutForm from "@/components/CheckoutForm";
 import {createPaymentIntent} from "@/utils/paymentIntent.service";
 import {getPublishableKey} from "@/utils/stripe.service";
 import {useRouter} from "next/router";
+import api from "@/utils/Api";
+import ProductCarouselThumbs from "@/components/ProductCarouselThumbs";
 
 const ProductDetails = () => {
   const router = useRouter();
   const {id} = router.query;
   const [product, setProduct] = useState({});
+  const [productGallery, setProductGallery] = useState([]);
   const [loading, setLoading] = useState(false);
   const [clientSecret, setClientSecret] = useState("");
   const [loadStripeComponent, setLoadStripeComponent] = useState(false);
+  const [thumbsSwiper, setThumbsSwiper] = useState(null);
 
   const stripePromise = getPublishableKey();
 
@@ -45,13 +48,14 @@ const ProductDetails = () => {
     const fetchProduct = async (id) => {
       try {
         if (id) {
-          const response = await axios.get(`https://dummyjson.com/products/${id}`);
+          const response = await api.get(`/products/${id}`);
           const productRes = {
             ...response.data,
             currency: 'USD'
           }
 
           setProduct(productRes);
+          setProductGallery(productRes.images);
         }
       } catch (error) {
         console.error(error);
@@ -64,11 +68,16 @@ const ProductDetails = () => {
   return (
     <div>
       <section className="text-gray-700 body-font overflow-hidden">
-        <div className="container px-5 py-24 mx-auto">
-          <div className="lg:w-4/5 mx-auto flex flex-wrap">
-            <img alt="ecommerce"
-                 className="lg:w-1/2 w-full object-cover object-center rounded border border-gray-200"
-                 src={product.thumbnail}/>
+        <div className="container py-4 mx-auto">
+          <div className="mx-auto flex flex-wrap">
+            <ProductCarouselThumbs
+              gallery={productGallery}
+              thumbsSwiper={thumbsSwiper}
+              setThumbsSwiper={setThumbsSwiper}
+            />
+            {/*<img alt="ecommerce"*/}
+            {/*     className="lg:w-1/2 w-full object-cover object-center rounded border border-gray-200"*/}
+            {/*     src={product.thumbnail}/>*/}
             <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
               <h2 className="text-sm title-font text-gray-500 tracking-widest">{product.brand}</h2>
               <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">
@@ -156,7 +165,6 @@ const ProductDetails = () => {
             </div>
           </div>
         </div>
-        {/*End homepage*/}
 
         {
           loadStripeComponent &&
