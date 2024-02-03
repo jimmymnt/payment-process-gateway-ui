@@ -1,4 +1,5 @@
 import Link from "next/link";
+import {ProtectRoute} from "@/contexts/auth";
 
 const Home = () => {
   return (

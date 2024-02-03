@@ -3,6 +3,7 @@ import '@/app/globals.css';
 import Menu from '@/components/Menu';
 import Footer from "@/components/Footer";
 import Head from "next/head";
+import {AuthProvider, ProtectRoute} from "@/contexts/auth";
 
 const inter = Inter({subsets: ['latin']});
 
@@ -14,9 +15,13 @@ function Application({Component, pageProps}) {
         <meta name="viewport" content="initial-scale=1.0, width=device-width"/>
       </Head>
       <div className={`h-screen ${inter.className}`}>
-        <Menu/>
-        <Component {...pageProps} />
-        <Footer/>
+        <AuthProvider>
+          <ProtectRoute>
+            <Menu/>
+            <Component {...pageProps} />
+            <Footer/>
+          </ProtectRoute>
+        </AuthProvider>
       </div>
     </>
   );

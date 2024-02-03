@@ -1,10 +1,13 @@
 import {useState} from "react";
 import axios from "axios";
+import {redirect} from "next/navigation";
+import {useAuth} from "@/contexts/auth";
 
 export default function Login() {
-  const [email, setEmail] = useState('');
+  const {login} = useAuth();
+  const [email, setEmail] = useState('kminchelle');
+  const [password, setPassword] = useState('0lelplR');
   const [error, setError] = useState('');
-  const [password, setPassword] = useState('');
   const handleLogin = async (event) => {
     event.preventDefault();
     setError('');
@@ -20,17 +23,13 @@ export default function Login() {
     }
 
     try {
-      const response = await axios.post('https://dummyjson.com/auth/login', {
-        username: email,
-        password,
-      });
-
-      console.log(response);
+      login(email, password);
     } catch (error) {
-      console.log(`ERR:`, error.response.data.message);
-      setError(error.response.data.message);
+      console.log(`ERR:`, error);
+      // setError(error.response.data.message);
     }
   }
+
   return (
     <div className="">
       <section className="bg-gray-50">
@@ -65,9 +64,11 @@ export default function Login() {
                 <div>
                   <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900">Your
                     email</label>
-                  <input type="email"
+                  <input type="text"
                          onChange={(event) => setEmail(event.target.value)}
-                         name="email" id="email"
+                         name="email"
+                         id="email"
+                         // value={'kminchelle'}
                          className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                          placeholder="name@company.com" required=""/>
                 </div>
@@ -77,6 +78,7 @@ export default function Login() {
                   <input type="password"
                          name="password"
                          id="password"
+                         // value={'0lelplR'}
                          onChange={(event) => setPassword(event.target.value)}
                          placeholder="••••••••"
                          className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
@@ -103,7 +105,7 @@ export default function Login() {
                 <p className="text-sm font-light text-gray-500">
                   Don’t have an account yet?
                   <a href="#"
-                     className="font-medium text-primary-600 hover:underline">Sign up</a>
+                     className="font-medium text-primary-600 hover:underline">{' '}Sign up</a>
                 </p>
               </form>
             </div>

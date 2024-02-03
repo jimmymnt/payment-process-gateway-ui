@@ -6,29 +6,34 @@ import SearchProducts from "@/components/SearchProducts";
 import Link from "next/link";
 import Loading from "@/components/Loading";
 
-export async function getServerSideProps(context) {
-  const {params} = context;
-  let {page} = params;
-  const limit = 10;
-  const response = await axios.get(`https://dummyjson.com/products?skip=${(page - 1) * 10}&limit=${limit}`);
-  const {data} = response;
-
-  return {
-    props: {
-      products: data.products,
-      total: data.total,
-      limit,
-      page: page,
-    }
-  }
-}
-
-const Page = ({products, total, limit}) => {
+const Page = () => {
   const [loading, setLoading] = useState(false);
+  const [products, setProducts] = useState([]);
+  const [total, setTotal] = useState(0);
+  const [limit, setLimit] = useState(10);
   const router = useRouter();
   let {page} = router.query;
 
   const paginate = () => setLoading(true);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        if (page !== undefined) {
+          setLoading(true);
+          const response = await axios.get(`https://dummyjson.com/products?skip=${(page - 1) * 10}&limit=${limit}`);
+
+          const {data} = response;
+          setProducts(data.products);
+          setTotal(data.total);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    fetchProducts().then();
+  }, [page, limit]);
 
   useEffect(() => {
     setLoading(false);
