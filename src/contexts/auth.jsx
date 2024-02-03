@@ -52,7 +52,7 @@ export const AuthProvider = ({children}) => {
         console.log("Got user", user);
         const returnUrl = params.get('returnUrl');
         await router.push({
-          pathname: returnUrl
+          pathname: returnUrl ? returnUrl : '/',
         });
       } else {
         await router.push({
