@@ -12,6 +12,7 @@ export const AuthProvider = ({children}) => {
   const router = useRouter();
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [errors, setErrors] = useState([]);
 
   useEffect(() => {
     async function loadAuth() {
@@ -60,7 +61,7 @@ export const AuthProvider = ({children}) => {
         });
       }
     } catch (error) {
-      console.log(error);
+      setErrors(error.response.data.message);
     }
   }
 
@@ -74,7 +75,7 @@ export const AuthProvider = ({children}) => {
   }
 
   return (
-    <AuthContext.Provider value={{isAuthenticated: !!user, user, login, loading, logout}}>
+    <AuthContext.Provider value={{isAuthenticated: !!user, user, login, errors, loading, logout}}>
       {children}
     </AuthContext.Provider>
   )

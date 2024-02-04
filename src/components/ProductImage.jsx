@@ -24,7 +24,7 @@ const ProductImage = ({images}) => {
             alt={mainImg}
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            className="object-cover transform cursor-pointer"
+            className="object-contain transform cursor-pointer"
           />}
       </div>
       <div className="relative flex border-t border-palette-lighter">
