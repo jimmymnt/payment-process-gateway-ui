@@ -1,24 +1,14 @@
 import {useState} from "react";
-import axios from "axios";
-import {redirect} from "next/navigation";
 import {useAuth} from "@/contexts/auth";
 
 export default function Login() {
-  const {login} = useAuth();
-  const [email, setEmail] = useState('kminchelle');
-  const [password, setPassword] = useState('0lelplR');
-  const [error, setError] = useState('');
+  const {login, errors} = useAuth();
+  const [email, setEmail] = useState(null);
+  const [password, setPassword] = useState(null);
   const handleLogin = async (event) => {
     event.preventDefault();
-    setError('');
 
-    if (email === '') {
-      setError('Email field can not be empty');
-      return;
-    }
-
-    if (password === '') {
-      setError('Password field can not be empty');
+    if (email === null || password === null) {
       return;
     }
 
@@ -34,9 +24,6 @@ export default function Login() {
     <div className="">
       <section className="bg-gray-50">
         <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-          <a href="#" className="flex items-center mb-6 text-2xl font-semibold text-gray-900">
-            JJ Shop
-          </a>
           <div
             className="w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0:border-gray-700">
             <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
@@ -45,7 +32,7 @@ export default function Login() {
               </h1>
               <form className="space-y-4 md:space-y-6" action="#" onSubmit={handleLogin}>
                 {
-                  error &&
+                  errors.length > 0 &&
                   <div
                     className="mb-6 flex items-center p-4 text-sm text-red-800 rounded-lg bg-red-50"
                     role="alert">
@@ -57,7 +44,7 @@ export default function Login() {
                     </svg>
                     <span className="sr-only">Info</span>
                     <div>
-                      {error}
+                      {errors}
                     </div>
                   </div>
                 }

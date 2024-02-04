@@ -17,11 +17,13 @@ function Application({Component, pageProps}) {
       <div className={`h-screen ${inter.className}`}>
         <AuthProvider>
           <ProtectRoute>
-            <Menu/>
-            <div className="max-w-screen-xl mx-auto px-4">
-              <Component {...pageProps} />
+            <div className="font-[sans-serif]">
+              <Menu/>
+              <div className="max-w-screen-xl mx-auto px-4">
+                <Component {...pageProps} />
+              </div>
+              <Footer/>
             </div>
-            <Footer/>
           </ProtectRoute>
         </AuthProvider>
       </div>

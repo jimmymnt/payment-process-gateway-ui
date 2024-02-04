@@ -164,6 +164,11 @@ const ProductDetails = () => {
                   {loading ? 'Loading' : 'Pay with Stripe'}
                 </button>
               </div>
+              <button
+                type="button"
+                className="w-full mt-6 px-4 py-3 bg-[#333] hover:bg-[#222] text-white rounded-full">
+                Add to cart
+              </button>
             </div>
           </div>
         </div>
