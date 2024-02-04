@@ -6,6 +6,7 @@ import {getPublishableKey} from "@/utils/stripe.service";
 import {useRouter} from "next/router";
 import api from "@/utils/Api";
 import ProductCarouselThumbs from "@/components/ProductCarouselThumbs";
+import ProductImage from "@/components/ProductImage";
 
 const ProductDetails = () => {
   const router = useRouter();
@@ -70,15 +71,16 @@ const ProductDetails = () => {
       <section className="text-gray-700 body-font overflow-hidden">
         <div className="container py-4 mx-auto">
           <div className="mx-auto flex flex-wrap">
-            <ProductCarouselThumbs
-              gallery={productGallery}
-              thumbsSwiper={thumbsSwiper}
-              setThumbsSwiper={setThumbsSwiper}
-            />
-            {/*<img alt="ecommerce"*/}
-            {/*     className="lg:w-1/2 w-full object-cover object-center rounded border border-gray-200"*/}
-            {/*     src={product.thumbnail}/>*/}
-            <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
+            {/*<ProductCarouselThumbs*/}
+            {/*  gallery={productGallery}*/}
+            {/*  thumbsSwiper={thumbsSwiper}*/}
+            {/*  setThumbsSwiper={setThumbsSwiper}*/}
+            {/*/>*/}
+            {
+              product &&
+              <ProductImage images={productGallery}/>
+            }
+            <div className="md:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
               <h2 className="text-sm title-font text-gray-500 tracking-widest">{product.brand}</h2>
               <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">
                 {product.title}
