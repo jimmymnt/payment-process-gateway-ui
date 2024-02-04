@@ -4,6 +4,7 @@ import React, {createContext, useState, useContext, useEffect} from 'react'
 import api from "@/utils/Api";
 import {useRouter} from "next/router";
 import {useSearchParams} from "next/navigation";
+import Loading from "@/components/Loading";
 
 const AuthContext = createContext({});
 
@@ -32,6 +33,7 @@ export const AuthProvider = ({children}) => {
       } catch (error) {
         localStorage.removeItem('token');
         setLoading(false);
+        setErrors(error.response.data.message);
       }
     }
 
@@ -42,6 +44,7 @@ export const AuthProvider = ({children}) => {
 
   const login = async (email, password) => {
     try {
+      setLoading(true);
       const response = await api.post('/auth/login', {username: email, password})
       const {token} = response.data;
       if (token) {
@@ -52,6 +55,8 @@ export const AuthProvider = ({children}) => {
         setUser(user);
         console.log("Got user", user);
         const returnUrl = params.get('returnUrl');
+        setErrors([]);
+        setLoading(false);
         await router.push({
           pathname: returnUrl ? returnUrl : '/',
         });
@@ -86,7 +91,7 @@ export const ProtectRoute = ({children}) => {
   const {isAuthenticated, loading} = useAuth();
 
   if (!!loading) {
-    return <>Loading</>
+    return <Loading loading={loading}>{children}</Loading>;
   }
 
   if (!isAuthenticated && router.pathname !== '/login') {
