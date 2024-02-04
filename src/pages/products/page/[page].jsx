@@ -1,10 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import {useRouter} from "next/router";
 import Pagination from "@/components/Pagination";
-import SearchProducts from "@/components/SearchProducts";
+import SearchProducts from "@/components/Product/SearchProducts";
 import Link from "next/link";
 import Loading from "@/components/Loading";
 import api from "@/utils/Api";
+import {Dropdown} from "flowbite-react";
 
 const Page = () => {
   const [loading, setLoading] = useState(false);

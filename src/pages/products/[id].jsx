@@ -5,8 +5,9 @@ import {createPaymentIntent} from "@/utils/paymentIntent.service";
 import {getPublishableKey} from "@/utils/stripe.service";
 import {useRouter} from "next/router";
 import api from "@/utils/Api";
-import ProductCarouselThumbs from "@/components/ProductCarouselThumbs";
-import ProductImage from "@/components/ProductImage";
+import ProductCarouselThumbs from "@/components/Product/ProductCarouselThumbs";
+import ProductImage from "@/components/Product/ProductImage";
+import ProductCategory from "@/components/Product/ProductCategory";
 
 const ProductDetails = () => {
   const router = useRouter();
@@ -16,7 +17,6 @@ const ProductDetails = () => {
   const [loading, setLoading] = useState(false);
   const [clientSecret, setClientSecret] = useState("");
   const [loadStripeComponent, setLoadStripeComponent] = useState(false);
-  const [thumbsSwiper, setThumbsSwiper] = useState(null);
 
   const stripePromise = getPublishableKey();
 
@@ -71,11 +71,6 @@ const ProductDetails = () => {
       <section className="text-gray-700 body-font overflow-hidden">
         <div className="container py-4 mx-auto">
           <div className="mx-auto flex flex-wrap">
-            {/*<ProductCarouselThumbs*/}
-            {/*  gallery={productGallery}*/}
-            {/*  thumbsSwiper={thumbsSwiper}*/}
-            {/*  setThumbsSwiper={setThumbsSwiper}*/}
-            {/*/>*/}
             {
               product &&
               <ProductImage images={productGallery}/>
@@ -85,6 +80,9 @@ const ProductDetails = () => {
               <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">
                 {product.title}
               </h1>
+
+              <ProductCategory product={product}/>
+
               <div className="flex mb-4">
                   <span className="flex items-center">
                     <svg fill="currentColor" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round"
