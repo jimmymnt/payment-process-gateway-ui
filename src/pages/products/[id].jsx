@@ -31,20 +31,20 @@ const ProductDetails = () => {
     const secDelay = loadStripeComponent ? 0 : 1000;
     setTimeout(async () => {
       event.preventDefault();
-      // const paymentIntentInfo = localStorage.getItem(`pi_${product.id}`);
-      // if (!paymentIntentInfo) {
-      //   const paymentIntent = await createPaymentIntent(product);
-      //   localStorage.setItem(`pi_${product.id}`, JSON.stringify(paymentIntent.data));
-      //   setClientSecret(paymentIntent.data.client_secret);
-      // } else {
-      //   const data = JSON.parse(paymentIntentInfo);
-      //   setClientSecret(data.client_secret);
-      // }
+      const paymentIntentInfo = localStorage.getItem(`pi_${product.id}`);
+      if (!paymentIntentInfo) {
+        const paymentIntent = await createPaymentIntent(product);
+        localStorage.setItem(`pi_${product.id}`, JSON.stringify(paymentIntent.data));
+        setClientSecret(paymentIntent.data.client_secret);
+      } else {
+        const data = JSON.parse(paymentIntentInfo);
+        setClientSecret(data.client_secret);
+      }
 
       /// The payment form needs to be waited until the Payment Intent is created.
-      // setLoadStripeComponent((oldValue) => !oldValue);
+      setLoadStripeComponent((oldValue) => !oldValue);
       setLoading(false);
-    }, 3000);
+    }, secDelay);
   }
 
   useEffect(() => {
