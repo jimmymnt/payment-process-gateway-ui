@@ -60,8 +60,9 @@ export default function Login() {
                   </div>
                 </div>
                 <div>
-                  <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900">Your
-                    email</label>
+                  <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900">
+                    Your email
+                  </label>
                   <input type="text"
                          onChange={(event) => setEmail(event.target.value)}
                          name="email"
@@ -71,7 +72,9 @@ export default function Login() {
                 </div>
                 <div>
                   <label htmlFor="password"
-                         className="block mb-2 text-sm font-medium text-gray-900">Password</label>
+                         className="block mb-2 text-sm font-medium text-gray-900">
+                    Password
+                  </label>
                   <input type="password"
                          name="password"
                          id="password"
