@@ -1,4 +1,5 @@
 import React from 'react';
+import ProductQuantity from "@/components/Product/ProductQuantity";
 
 const Cart = () => {
   return (
@@ -6,7 +7,7 @@ const Cart = () => {
       <h1 className="text-2xl font-semibold mb-4">Shopping Cart</h1>
       <div className="flex flex-col md:flex-row gap-4">
         <div className="md:w-3/4">
-          <div className="bg-white rounded-lg shadow-md p-6 mb-4">
+          <div className="bg-white rounded-lg shadow-md p-6 mb-4 dark:bg-gray-700">
             <table className="w-full">
               <thead>
               <tr>
@@ -26,11 +27,10 @@ const Cart = () => {
                 </td>
                 <td className="py-4">$19.99</td>
                 <td className="py-4">
-                  <div className="flex items-center">
-                    <button className="border rounded-md py-2 px-4 mr-2">-</button>
-                    <span className="text-center w-8">1</span>
-                    <button className="border rounded-md py-2 px-4 ml-2">+</button>
-                  </div>
+                  <ProductQuantity
+                    label={false}
+                    footHelper={false}
+                  />
                 </td>
                 <td className="py-4">$19.99</td>
               </tr>
