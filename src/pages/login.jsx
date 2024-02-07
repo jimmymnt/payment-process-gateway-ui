@@ -1,3 +1,4 @@
+"use client"
 import {useState} from "react";
 import {useAuth} from "@/contexts/auth";
 import Loading from "@/components/Loading";

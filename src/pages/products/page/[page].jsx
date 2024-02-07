@@ -1,6 +1,5 @@
 "use client"
 import React, {useEffect, useState} from 'react';
-import {useRouter} from "next/router";
 import SearchProducts from "@/components/Product/SearchProducts";
 import Link from "next/link";
 import Loading from "@/components/Loading";
@@ -70,7 +69,7 @@ const Page = () => {
       </Loading>
       <h2 className="sr-only">Products</h2>
       <div className="flex overflow-x-auto sm:justify-center">
-        <Pagination currentPage={currentPage} totalPages={total} onPageChange={paginate}/>
+        <Pagination layout="table" currentPage={currentPage} totalPages={total} onPageChange={paginate}/>
       </div>
     </div>
   );
