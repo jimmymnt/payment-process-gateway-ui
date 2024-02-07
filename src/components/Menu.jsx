@@ -35,7 +35,7 @@ const Menu = () => {
             <div className="flex flex-wrap items-center gap-2">
               <Tooltip content={`Toggle ${currentTheme === 'dark' ? 'Light' : 'Dark'} Theme`}>
                 <button onClick={handleSetTheme}
-                        className="text-gray-500 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-200 rounded-lg text-sm p-2 inline-flex items-center dark:bg-gray-700 dark:text-gray-400 dark:hover:bg-gray-600 dark:focus:ring-gray-600">
+                        className="text-gray-500 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-200 rounded-lg p-2 inline-flex items-center dark:bg-gray-700 dark:text-gray-400 dark:hover:bg-gray-600 dark:focus:ring-gray-600">
                   {
                     currentTheme === 'dark' ?
                       <svg
@@ -96,7 +96,7 @@ const Menu = () => {
           }
         </div>
         <Navbar.Collapse>
-          <Link href="/">
+          <Link href="/" className="md:text-sm sm:text-lg">
             Home
           </Link>
           <Link href="/products/page/1">Shop</Link>

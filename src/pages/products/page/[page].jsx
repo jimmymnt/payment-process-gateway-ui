@@ -46,7 +46,8 @@ const Page = () => {
     <div className="mx-auto py-14 sm:py-14">
       <SearchProducts/>
       <Loading loading={loading}>
-        <div className="items-center my-8 p-6 bg-white border border-gray-100 rounded-lg shadow-md grid grid-cols-1 gap-x-6 gap-y-10 mt-10 mb-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8w dark:border dark:bg-gray-800 dark:border-gray-700">
+        <div
+          className="items-center my-8 p-6 bg-white border border-gray-100 rounded-lg shadow-md grid grid-cols-1 gap-x-6 gap-y-10 mt-10 mb-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8w dark:border dark:bg-gray-800 dark:border-gray-700">
           {
             products && products.map(product => {
               return (

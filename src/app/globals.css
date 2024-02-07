@@ -18,13 +18,6 @@
 
 body {
   color: rgb(75 85 99);
-  /*background: white;*/
-  /*background: linear-gradient(*/
-  /*    to bottom,*/
-  /*    transparent,*/
-  /*    rgb(var(--background-end-rgb))*/
-  /*  )*/
-  /*  rgb(var(--background-start-rgb));*/
 }
 
 @layer utilities {
@@ -37,4 +30,19 @@ body {
   body {
     @apply dark:bg-gray-800 bg-white
   }
+}
+
+.product-card img {
+  height: 250px !important;
+  object-fit: cover;
+}
+
+:is(.light .product-gallery-image  button > span),
+:is(.dark .product-gallery-image button > span) {
+  background-color: #00374b !important;
+}
+
+:is(.light .product-gallery-image button > span > svg),
+:is(.dark .product-gallery-image button > span > svg) {
+  color: #fff !important;
 }

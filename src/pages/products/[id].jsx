@@ -13,6 +13,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCartShopping, faCreditCard} from "@fortawesome/free-solid-svg-icons";
 import ProductReview from "@/components/Product/ProductReview";
 import ProductQuantity from "@/components/Product/ProductQuantity";
+import ProductPrice from "@/components/Product/ProductPrice";
 
 const ProductDetails = () => {
   const router = useRouter();
@@ -53,7 +54,7 @@ const ProductDetails = () => {
 
   const setQuantityHandler = (step = 1, type = '+') => {
     setQuantity((oldValue) => {
-      if (type === '+') {
+      if (type === 'inc') {
         return oldValue + step;
       } else {
         if (oldValue < 1) {
@@ -69,9 +70,19 @@ const ProductDetails = () => {
       try {
         if (id) {
           const response = await api.get(`/products/${id}`);
-          const productRes = {
+          let productRes = {
             ...response.data,
             currency: 'USD'
+          }
+          /**
+           * Calculate discounted price.
+           * 100 Euro -> discount 12%
+           * -> new price would be 100 - (100 * 12 / 100)
+           */
+          const newPrice = parseFloat(productRes.price) - (parseFloat(productRes.price) * parseFloat(productRes.discountPercentage) / 100.0);
+          productRes = {
+            ...productRes,
+            discountedPrice: Math.ceil(newPrice),
           }
 
           setProduct(productRes);
@@ -86,7 +97,7 @@ const ProductDetails = () => {
   }, [id]);
 
   return (
-    <section className="text-gray-700 body-font overflow-hidden">
+    <section className="text-gray-700 body-font overflow-hidden product-details">
       <div className="py-4 mx-auto">
         <div className="mx-auto flex flex-wrap">
           {
@@ -107,13 +118,7 @@ const ProductDetails = () => {
               <ProductReview/>
             </div>
 
-            <p className="inline-block text-2xl font-semibold text-gray-700 dark:text-gray-200 my-4">
-              <span>{product.currency} {product.price}</span>
-              <span
-                className="ml-3 text-base font-normal text-gray-500 line-through dark:text-gray-300">
-                  {product.currency} {product.price}
-                </span>
-            </p>
+            <ProductPrice product={product}/>
 
             <div className="bg-gray-100 dark:bg-gray-700 rounded-xl">
               <div className="p-2">

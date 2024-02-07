@@ -3,7 +3,7 @@ import { Footer } from 'flowbite-react';
 
 const SiteFooter = () => {
   return (
-    <Footer className="mx-auto p-4 font-mediu">
+    <Footer className="mx-auto p-4 font-medium">
       <Footer.Copyright href="#" by="JJ SHOPsss" year={2024} />
       <Footer.LinkGroup>
         <Footer.Link href="#">About</Footer.Link>
