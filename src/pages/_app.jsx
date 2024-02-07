@@ -1,10 +1,10 @@
 import {Inter} from 'next/font/google';
 import '@/app/globals.css';
 import Menu from '@/components/Menu';
-import Footer from "@/components/Footer";
 import Head from "next/head";
 import {AuthProvider, ProtectRoute} from "@/contexts/auth";
 import {ThemeProvider} from "next-themes";
+import SiteFooter from "@/components/Footer";
 
 const inter = Inter({subsets: ['latin']});
 
@@ -19,13 +19,12 @@ function Application({Component, pageProps}) {
         <AuthProvider>
           <ProtectRoute>
             <ThemeProvider attribute="class">
-              <div className="font-[sans-serif] dark:bg-gray-900 bg-white dark:text-gray-200 text-black">
+              <div className="font-[sans-serif] container mx-auto p-5 dark:bg-gray-800 bg-white dark:text-gray-200 text-black">
                 <Menu/>
-
-                <div className="max-w-screen-xl mx-auto px-4">
+                <div className="mx-auto">
                   <Component {...pageProps} />
                 </div>
-                <Footer/>
+                <SiteFooter/>
               </div>
             </ThemeProvider>
           </ProtectRoute>
