@@ -16,7 +16,7 @@ const ProductImage = ({images}) => {
 
   return (
     <div
-      className="w-full md:w-1/2 bg-white rounded dark:border-gray-600 dark:bg-gray-800">
+      className="w-full md:w-1/2 bg-white rounded dark:border-gray-600 dark:bg-gray-800 product-gallery-image">
       <div className="h-56 sm:h-64 xl:h-80 2xl:h-96">
         <Carousel slideInterval={4000}>
           {
