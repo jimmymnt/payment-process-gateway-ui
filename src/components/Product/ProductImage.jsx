@@ -16,7 +16,7 @@ const ProductImage = ({images}) => {
   }, [images]);
 
   return (
-    <div className="w-full md:w-1/2 border border-palette-lighter bg-white rounded shadow-lg">
+    <div className="w-full md:w-1/2 border border-palette-lighter bg-white rounded shadow-lg dark:border-gray-600 dark:bg-gray-600">
       <div className="relative h-96">
         {
           mainImg && <Image

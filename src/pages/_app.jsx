@@ -4,7 +4,8 @@ import Menu from '@/components/Menu';
 import Footer from "@/components/Footer";
 import Head from "next/head";
 import {AuthProvider, ProtectRoute} from "@/contexts/auth";
-import { ThemeModeScript } from 'flowbite-react';
+import {ThemeProvider} from "next-themes";
+
 const inter = Inter({subsets: ['latin']});
 
 function Application({Component, pageProps}) {
@@ -13,18 +14,20 @@ function Application({Component, pageProps}) {
       <Head>
         <title>JJ Shop</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width"/>
-        <ThemeModeScript/>
       </Head>
       <div className={`h-screen ${inter.className}`}>
         <AuthProvider>
           <ProtectRoute>
-            <div className="font-[sans-serif]">
-              <Menu/>
-              <div className="max-w-screen-xl mx-auto px-4">
-                <Component {...pageProps} />
+            <ThemeProvider attribute="class">
+              <div className="font-[sans-serif]">
+                <Menu/>
+
+                <div className="max-w-screen-xl mx-auto px-4">
+                  <Component {...pageProps} />
+                </div>
+                <Footer/>
               </div>
-              <Footer/>
-            </div>
+            </ThemeProvider>
           </ProtectRoute>
         </AuthProvider>
       </div>

@@ -2,6 +2,7 @@
 import React, {useState} from 'react';
 import Link from "next/link";
 import {useAuth} from "@/contexts/auth";
+import {useTheme} from "next-themes";
 
 const Menu = () => {
   const {isAuthenticated, logout} = useAuth();
@@ -14,6 +15,14 @@ const Menu = () => {
 
   const openDropdownMenu = () => {
     setDropdownMenu((oldValue) => !oldValue);
+  }
+
+  const {systemTheme, theme, setTheme} = useTheme();
+  const currentTheme = theme === 'system' ? systemTheme : theme;
+
+  const handleSetTheme = (event) => {
+    event.preventDefault();
+    setTheme(theme === 'light' ? 'dark' : 'light');
   }
 
   return (
@@ -116,7 +125,10 @@ const Menu = () => {
             </li>
             <li>
               <Link href="#"
-                    className="block py-2 px-3 text-gray-900 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-600 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700">Contact</Link>
+                    onClick={handleSetTheme}
+                    className="block py-2 px-3 text-gray-900 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-600 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700">
+                Contact
+              </Link>
             </li>
           </ul>
         </div>
