@@ -19,7 +19,7 @@ function Application({Component, pageProps}) {
         <AuthProvider>
           <ProtectRoute>
             <ThemeProvider attribute="class">
-              <div className="font-[sans-serif]">
+              <div className="font-[sans-serif] dark:bg-gray-900 bg-white dark:text-gray-200 text-black">
                 <Menu/>
 
                 <div className="max-w-screen-xl mx-auto px-4">

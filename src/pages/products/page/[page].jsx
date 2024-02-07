@@ -1,28 +1,30 @@
+"use client"
 import React, {useEffect, useState} from 'react';
 import {useRouter} from "next/router";
-import Pagination from "@/components/Pagination";
 import SearchProducts from "@/components/Product/SearchProducts";
 import Link from "next/link";
 import Loading from "@/components/Loading";
 import api from "@/utils/Api";
-import {Dropdown} from "flowbite-react";
+import {Pagination} from "flowbite-react";
 
 const Page = () => {
   const [loading, setLoading] = useState(false);
   const [products, setProducts] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
   const [total, setTotal] = useState(0);
   const [limit, setLimit] = useState(10);
-  const router = useRouter();
-  let {page} = router.query;
 
-  const paginate = () => setLoading(true);
+  const paginate = (page) => {
+    setCurrentPage(page);
+    setLoading(true);
+  }
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        if (page !== undefined) {
+        if (currentPage !== undefined) {
           setLoading(true);
-          const response = await api.get(`/products?skip=${(page - 1) * 10}&limit=${limit}`);
+          const response = await api.get(`/products?skip=${(currentPage - 1) * 10}&limit=${limit}`);
 
           const {data} = response;
           setProducts(data.products);
@@ -34,7 +36,7 @@ const Page = () => {
     }
 
     fetchProducts().then();
-  }, [page, limit]);
+  }, [currentPage, limit]);
 
   useEffect(() => {
     setLoading(false);
@@ -45,7 +47,7 @@ const Page = () => {
       <SearchProducts/>
       <Loading loading={loading}>
         <div
-          className="items-center my-8 p-6 bg-white border border-gray-100 rounded-lg shadow-md grid grid-cols-1 gap-x-6 gap-y-10 mt-10 mb-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
+          className="items-center my-8 p-6 bg-white border border-gray-100 rounded-lg shadow-md grid grid-cols-1 gap-x-6 gap-y-10 mt-10 mb-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8w dark:border dark:bg-gray-800 dark:border-gray-700">
           {
             products && products.map(product => {
               return (
@@ -57,8 +59,8 @@ const Page = () => {
                            alt="Tall slender porcelain bottle with natural clay textured body and cork stopper."
                            className="h-full w-full object-cover object-center group-hover:opacity-75"/>
                     </div>
-                    <h3 className="mt-4 text-sm text-gray-700">{product.title}</h3>
-                    <p className="mt-1 text-lg font-medium text-gray-900">${product.price}</p>
+                    <h3 className="mt-4 text-sm text-gray-700 dark:text-gray-300">{product.title}</h3>
+                    <p className="mt-1 text-lg font-medium text-gray-900 dark:text-gray-300">${product.price}</p>
                   </Link>
                 </div>
               )
@@ -67,12 +69,9 @@ const Page = () => {
         </div>
       </Loading>
       <h2 className="sr-only">Products</h2>
-      <Pagination
-        paginate={paginate}
-        currentPage={page}
-        postsPerPage={limit}
-        totalPosts={total}
-      />
+      <div className="flex overflow-x-auto sm:justify-center">
+        <Pagination currentPage={currentPage} totalPages={total} onPageChange={paginate}/>
+      </div>
     </div>
   );
 };
