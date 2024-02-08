@@ -95,12 +95,20 @@ export const ProtectRoute = ({children}) => {
     return children;
   }
 
-  if (!isAuthenticated && router.pathname !== '/login') {
+  const pubRoutes = [
+    '/products/page/[page]',
+    '/products/[id]',
+    '/login',
+    '/register',
+  ];
+
+  if (!isAuthenticated && !pubRoutes.includes(router.pathname)) {
     router.push({
       pathname: '/login',
       query: {returnUrl: router.asPath}
     });
   }
+
   return children;
 };
 

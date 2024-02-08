@@ -40,14 +40,9 @@ const Page = () => {
     fetchProducts().then();
   }, [currentPage, limit]);
 
-  // useEffect(() => {
-  //   setLoading(false);
-  // }, [products]);
-
   return (
     <div className="mx-auto py-14 sm:py-14">
       <SearchProducts/>
-
 
       <Loading loading={loading}>
         <div
