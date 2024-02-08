@@ -2,10 +2,8 @@
 import React from 'react';
 import Link from "next/link";
 import {useAuth} from "@/contexts/auth";
-import {useTheme} from "next-themes";
 import {Avatar, Dropdown, Navbar, Tooltip} from "flowbite-react";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faMoon, faSun} from "@fortawesome/free-solid-svg-icons";
+import ThemeSwitcher from "@/components/Utils/ThemeSwitcher";
 
 const Menu = () => {
   const {isAuthenticated, logout, user} = useAuth();
@@ -13,14 +11,6 @@ const Menu = () => {
   const logoutHandler = (event) => {
     event.preventDefault();
     logout();
-  }
-
-  const {systemTheme, theme, setTheme} = useTheme();
-  const currentTheme = theme === 'system' ? systemTheme : theme;
-
-  const handleSetTheme = (event) => {
-    event.preventDefault();
-    setTheme(theme === 'light' ? 'dark' : 'light');
   }
 
   return (
@@ -32,15 +22,7 @@ const Menu = () => {
         </Link>
         <div className="flex md:order-2">
           <div className="flex flex-wrap items-center gap-2">
-            <button onClick={handleSetTheme}
-                    className="text-gray-500 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-200 rounded-lg p-2 inline-flex items-center dark:bg-gray-700 dark:text-gray-400 dark:hover:bg-gray-600 dark:focus:ring-gray-600">
-              {
-                currentTheme === 'dark' ?
-                  <FontAwesomeIcon icon={faSun} className="w-5 h-5"/>
-                  :
-                  <FontAwesomeIcon icon={faMoon} className="w-5 h-5"/>
-              }
-            </button>
+            <ThemeSwitcher/>
             {
               isAuthenticated
               &&

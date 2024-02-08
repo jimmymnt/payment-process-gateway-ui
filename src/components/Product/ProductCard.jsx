@@ -7,10 +7,19 @@ import React from "react";
 const ProductCard = ({product}) => {
   return (
     <Card
-      className="max-w-sm product-card"
+      className="relative overflow-hidden max-w-sm product-card"
       imgAlt={product.title}
       imgSrc={product.thumbnail}
     >
+      {
+        product.discountPercentage > 0 &&
+        <div className="absolute left-0 top-0 h-16 w-16">
+          <div
+            className="bg-cyan-700 absolute transform -rotate-45 text-center text-white font-semibold py-1 left-[-40px] top-[32px] w-[170px]">
+            - {product.discountPercentage} %
+          </div>
+        </div>
+      }
       <Link href={`/products/${product.id}`}>
         <h5
           className="text-xl font-semibold tracking-tight text-gray-900 hover:text-cyan-700 dark:text-white dark:hover:text-gray-300">
@@ -24,11 +33,6 @@ const ProductCard = ({product}) => {
         <div className="">
           <span
             className="text-xl font-bold text-gray-900 dark:text-white">$ {product.discountedPrice ? product.discountedPrice : product.price}</span>
-          {
-            product.discountPercentage > 0 &&
-            <del
-              className="ml-2 align-super text-base font-bold text-gray-500 dark:text-gray-300"> $ {product.price}</del>
-          }
         </div>
         <a
           href="#"
