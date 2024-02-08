@@ -1,3 +1,4 @@
+"use client"
 import React from 'react';
 
 const ProductCardSkeleton = () => {
@@ -13,13 +14,18 @@ const ProductCardSkeleton = () => {
       </div>
       <div className="md:w-1/2 w-full">
         {/*Brand*/}
-        <div className="h-4 bg-gray-200 rounded-full dark:bg-gray-700 w-20 mb-4"></div>
+        <div className="h-4 bg-gray-200 rounded-full dark:bg-gray-700 w-20 mb-5 mt-5"></div>
         {/*Title*/}
-        <div className="h-7 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[480px] mb-2.5"></div>
+        <div className="h-7 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[480px] mb-5"></div>
         {/*Category*/}
-        <div className="h-5 bg-gray-200 rounded-full dark:bg-gray-700 w-40 mb-2.5"></div>
+        <div className="h-5 bg-gray-200 rounded-full dark:bg-gray-700 w-40 mb-5"></div>
         {/*Reviews & stars */}
-        <div className="h-2 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[440px] mb-2.5"></div>
+        <div className="h-5 bg-gray-200 rounded-full dark:bg-gray-700 w-56 mb-2.5"></div>
+
+        {/*Price*/}
+        <div className="h-10 bg-gray-200 rounded-full dark:bg-gray-700 w-40 mb-5 mt-8"></div>
+        <div className="h-5 bg-gray-200 rounded-full dark:bg-gray-700 w-56 mb-5"></div>
+
         {/*Description*/}
         <div className="h-2 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[460px] mb-2.5"></div>
         <div className="h-2 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[360px] mb-2.5"></div>

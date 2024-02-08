@@ -2,7 +2,7 @@
 import React from 'react';
 import Link from "next/link";
 import {useAuth} from "@/contexts/auth";
-import {Avatar, Dropdown, Navbar, Tooltip} from "flowbite-react";
+import {Avatar, Button, Dropdown, Navbar, Tooltip} from "flowbite-react";
 import ThemeSwitcher from "@/components/Utils/ThemeSwitcher";
 
 const Menu = () => {
@@ -25,47 +25,53 @@ const Menu = () => {
             <ThemeSwitcher/>
             {
               isAuthenticated
-              &&
-              <Dropdown
-                arrowIcon={true}
-                inline
-                label={
-                  <Tooltip content={'My account'}>
-                    <Avatar
-                      alt="User settings"
-                      img={`${user.image ? user.image : 'https://flowbite.com/docs/images/people/profile-picture-5.jpg'}`}
-                      rounded
-                    />
-                  </Tooltip>
-                }
-              >
-                <Dropdown.Header>
-                  <span className="block text-sm">{`${user.firstName} ${user.lastName}`}</span>
-                  <span className="block truncate text-sm font-medium">{user.email}</span>
-                </Dropdown.Header>
-                <Dropdown.Item>Dashboard</Dropdown.Item>
-                <Dropdown.Item>Settings</Dropdown.Item>
-                <Dropdown.Item>Earnings</Dropdown.Item>
-                <Dropdown.Divider/>
-                <Dropdown.Item>
-                  <Link href={'#'} onClick={logoutHandler}>Logout</Link>
-                </Dropdown.Item>
-              </Dropdown>
+                ? <Dropdown
+                  arrowIcon={true}
+                  inline
+                  label={
+                    <Tooltip content={'My account'}>
+                      <Avatar
+                        alt="User settings"
+                        img={`${user.image ? user.image : 'https://flowbite.com/docs/images/people/profile-picture-5.jpg'}`}
+                        rounded
+                      />
+                    </Tooltip>
+                  }
+                >
+                  <Dropdown.Header>
+                    <span className="block text-sm">{`${user.firstName} ${user.lastName}`}</span>
+                    <span className="block truncate text-sm font-medium">{user.email}</span>
+                  </Dropdown.Header>
+                  <Dropdown.Item>Dashboard</Dropdown.Item>
+                  <Dropdown.Item>Settings</Dropdown.Item>
+                  <Dropdown.Item>Earnings</Dropdown.Item>
+                  <Dropdown.Divider/>
+                  <Dropdown.Item>
+                    <Link href={'#'} onClick={logoutHandler}>Logout</Link>
+                  </Dropdown.Item>
+                </Dropdown>
+                : <>
+                  <Link href={'/login'} className="mx-2 text-sm">
+                    Login
+                  </Link>
+                  <Link
+                    href={'/register'}
+                    className="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none"
+                  >
+                    Sign Up
+                  </Link>
+                </>
             }
             <Navbar.Toggle/>
           </div>
         </div>
         <Navbar.Collapse>
-          <Link href="/" className="md:text-sm sm:text-lg">
+          <Link href="/">
             Home
           </Link>
           <Link href="/products/page/1">Shop</Link>
           <Link href="#">Services</Link>
           <Link href="#">Pricing</Link>
-          {
-            !isAuthenticated &&
-            <Link href={'/login'}>Login</Link>
-          }
         </Navbar.Collapse>
       </Navbar>
     </>

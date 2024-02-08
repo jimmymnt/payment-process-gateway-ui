@@ -102,7 +102,7 @@ const ProductDetails = () => {
 
   return (
     <>
-
+      {/*<ProductCardSkeleton/>*/}
       {
         loading && product.id === undefined ?
           <ProductCardSkeleton/>
