@@ -1,7 +1,6 @@
 "use client"
 import React, {useEffect, useState} from 'react';
 import SearchProducts from "@/components/Product/SearchProducts";
-import Link from "next/link";
 import Loading from "@/components/Loading";
 import api from "@/utils/Api";
 import {Pagination} from "flowbite-react";
@@ -48,6 +47,7 @@ const Page = () => {
   return (
     <div className="mx-auto py-14 sm:py-14">
       <SearchProducts/>
+
 
       <Loading loading={loading}>
         <div
