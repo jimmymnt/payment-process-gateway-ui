@@ -92,7 +92,7 @@ export const ProtectRoute = ({children}) => {
   const {isAuthenticated, loading} = useAuth();
 
   if (!!loading) {
-    return <Loading loading={loading}>{children}</Loading>;
+    return children;
   }
 
   if (!isAuthenticated && router.pathname !== '/login') {
