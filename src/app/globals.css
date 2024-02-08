@@ -46,3 +46,7 @@ body {
 :is(.dark .product-gallery-image button > span > svg) {
   color: #fff !important;
 }
+
+.xs\:w-full {
+  width: 100%;
+}
