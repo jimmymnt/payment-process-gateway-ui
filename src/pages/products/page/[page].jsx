@@ -22,13 +22,16 @@ const Page = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
+        setLoading(true);
         if (currentPage !== undefined) {
           setLoading(true);
           const response = await api.get(`/products?skip=${(currentPage - 1) * 10}&limit=${limit}`);
 
           const {data} = response;
-          setProducts(data.products);
-          setTotal(data.total);
+          const {products, total} = data;
+          setProducts(products);
+          setTotal(total);
+          setLoading(false);
         }
       } catch (error) {
         console.error(error);
@@ -38,16 +41,17 @@ const Page = () => {
     fetchProducts().then();
   }, [currentPage, limit]);
 
-  useEffect(() => {
-    setLoading(false);
-  }, [products]);
+  // useEffect(() => {
+  //   setLoading(false);
+  // }, [products]);
 
   return (
     <div className="mx-auto py-14 sm:py-14">
       <SearchProducts/>
+
       <Loading loading={loading}>
         <div
-          className="items-center my-8 grid grid-cols-1 gap-x-6 gap-y-10 mt-10 mb-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
+          className={`items-center my-8 grid grid-cols-1 gap-x-6 gap-y-10 mt-10 mb-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8`}>
           {
             products && products.map(product => {
               return (
