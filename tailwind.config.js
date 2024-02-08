@@ -49,10 +49,6 @@ module.exports = {
         // => @media (min-width: 1536px) { ... }
       },
     },
-    // screens: {
-    //   'xs': '475px',
-    //   ...defaultTheme.screens,
-    // },
   },
   plugins: [
     require("flowbite/plugin"),
