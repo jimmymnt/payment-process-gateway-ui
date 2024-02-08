@@ -34,7 +34,7 @@ body {
 
 .product-card img {
   height: 250px !important;
-  object-fit: cover;
+  object-fit: contain;
 }
 
 :is(.light .product-gallery-image  button > span),

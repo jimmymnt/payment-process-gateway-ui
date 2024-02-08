@@ -16,19 +16,20 @@ function Application({Component, pageProps}) {
         <meta name="viewport" content="initial-scale=1.0, width=device-width"/>
       </Head>
       <div className={`h-screen ${inter.className}`}>
-        <AuthProvider>
-          <ProtectRoute>
-            <ThemeProvider attribute="class">
-              <div className="font-[sans-serif] container mx-auto p-5 dark:bg-gray-800 bg-white dark:text-gray-200 text-black">
+        <ThemeProvider attribute="class">
+          <AuthProvider>
+            <ProtectRoute>
+              <div
+                className="container mx-auto p-5 dark:bg-gray-800 bg-white dark:text-gray-200 text-black">
                 <Menu/>
                 <div className="mx-auto">
                   <Component {...pageProps} />
                 </div>
                 <SiteFooter/>
               </div>
-            </ThemeProvider>
-          </ProtectRoute>
-        </AuthProvider>
+            </ProtectRoute>
+          </AuthProvider>
+        </ThemeProvider>
       </div>
     </>
   );
