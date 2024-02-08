@@ -10,10 +10,11 @@ import ProductImage from "@/components/Product/ProductImage";
 import ProductCategory from "@/components/Product/ProductCategory";
 import LoadingAnimation from "@/components/Utils/LoadingAnimation";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faCartShopping, faCreditCard} from "@fortawesome/free-solid-svg-icons";
+import {faCar, faCartShopping, faCreditCard} from "@fortawesome/free-solid-svg-icons";
 import ProductReview from "@/components/Product/ProductReview";
 import ProductQuantity from "@/components/Product/ProductQuantity";
 import ProductPrice from "@/components/Product/ProductPrice";
+import {Button} from "flowbite-react";
 
 const ProductDetails = () => {
   const router = useRouter();
@@ -139,24 +140,14 @@ const ProductDetails = () => {
               setQuantityHandler={setQuantityHandler}
               quantity={quantity}
             />
-            <button
-              type="button"
-              className="text-white bg-[#4285F4] hover:bg-[#4285F4]/90 focus:ring-4 focus:outline-none focus:ring-[#4285F4]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#4285F4]/55 me-2 mb-2"
-            >
-              <FontAwesomeIcon icon={faCartShopping} className="file: mr-2 h-6 w-6"/>
+            <Button isProcessing={false} className="sm:w-full text-white bg-[#050708] hover:bg-[#050708]/90 focus:ring-4 focus:outline-none focus:ring-[#050708]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#050708]/50 dark:hover:bg-[#050708]/30 me-2 mb-2">
+              <FontAwesomeIcon icon={faCartShopping} className="w-5 h-5 mr-2"/>
               <span>Add to cart</span>
-            </button>
-            <button type="button"
-                    disabled={loading}
-                    className="text-white bg-[#050708] hover:bg-[#050708]/90 focus:ring-4 focus:outline-none focus:ring-[#050708]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#050708]/50 dark:hover:bg-[#050708]/30 me-2 mb-2">
-              {
-                loading ?
-                  <LoadingAnimation/>
-                  :
-                  <FontAwesomeIcon icon={faCreditCard} className="file: mr-2 h-6 w-6"/>
-              }
-              <span>{loading ? 'Loading' : 'Pay with Stripe'}</span>
-            </button>
+            </Button>
+
+            <Button color={'blue'} className="my-3">
+              <span>Buy now</span>
+            </Button>
           </div>
         </div>
       </div>
