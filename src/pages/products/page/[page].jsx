@@ -24,7 +24,7 @@ const Page = () => {
         setLoading(true);
         if (currentPage !== undefined) {
           setLoading(true);
-          const response = await api.get(`/products?skip=${(currentPage - 1) * 10}&limit=${limit}`);
+          const response = await api.get(`products?page=${currentPage}&limit=${limit}`);
 
           const {data} = response;
           const {products, total} = data;
@@ -41,26 +41,31 @@ const Page = () => {
   }, [currentPage, limit]);
 
   return (
-    <div className="mx-auto py-14 sm:py-14">
-      <SearchProducts/>
+      <div className="flex">
+        <div className="w-1/4">w-1/4</div>
+        <div className="w-3/4">
+          <div className="mx-auto">
+            <SearchProducts/>
 
-      <Loading loading={loading}>
-        <div
-          className={`items-center my-8 grid grid-cols-1 gap-x-6 gap-y-10 mt-10 mb-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8`}>
-          {
-            products && products.map(product => {
-              return (
-                <ProductCard key={product.id} product={product}/>
-              )
-            })
-          }
+            <Loading loading={loading}>
+              <div
+                className={`items-center my-8 grid grid-cols-1 gap-x-6 gap-y-10 mt-10 mb-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8`}>
+                {
+                  products && products.map(product => {
+                    return (
+                      <ProductCard key={product._id} product={product}/>
+                    )
+                  })
+                }
+              </div>
+            </Loading>
+            <h2 className="sr-only">Products</h2>
+            <div className="flex overflow-x-auto sm:justify-center">
+              <Pagination currentPage={currentPage} totalPages={total} onPageChange={paginate}/>
+            </div>
+          </div>
         </div>
-      </Loading>
-      <h2 className="sr-only">Products</h2>
-      <div className="flex overflow-x-auto sm:justify-center">
-        <Pagination currentPage={currentPage} totalPages={total} onPageChange={paginate}/>
       </div>
-    </div>
   );
 };
 

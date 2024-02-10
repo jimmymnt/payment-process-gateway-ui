@@ -3,16 +3,12 @@ import {useState, useRef, useEffect} from 'react'
 import {Carousel} from "flowbite-react";
 
 const ProductImage = ({images}) => {
-  const [mainImg, setMainImg] = useState(null)
+  const [mainImg, setMainImg] = useState(null);
   const ref = useRef();
 
   function scroll(scrollOffset) {
     ref.current.scrollLeft += scrollOffset
   }
-
-  useEffect(() => {
-    setMainImg(images[0]);
-  }, [images]);
 
   return (
     <div

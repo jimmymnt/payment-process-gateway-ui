@@ -73,7 +73,7 @@ const ProductDetails = () => {
       try {
         if (id) {
           setLoading(true);
-          const response = await api.get(`/products/${id}`);
+          const response = await api.get(`products/${id}`);
           let productRes = {
             ...response.data,
             currency: 'USD'

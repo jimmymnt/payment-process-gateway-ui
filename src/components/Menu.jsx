@@ -2,7 +2,7 @@
 import React from 'react';
 import Link from "next/link";
 import {useAuth} from "@/contexts/auth";
-import {Avatar, Button, Dropdown, Navbar, Tooltip} from "flowbite-react";
+import {Avatar, Dropdown, Navbar, Tooltip} from "flowbite-react";
 import ThemeSwitcher from "@/components/Utils/ThemeSwitcher";
 
 const Menu = () => {
