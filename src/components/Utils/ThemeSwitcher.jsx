@@ -3,7 +3,7 @@ import React from 'react';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faMoon, faSun} from "@fortawesome/free-solid-svg-icons";
 import {useTheme} from "next-themes";
-import {Button, Tooltip} from "flowbite-react";
+import {Tooltip} from "flowbite-react";
 
 const ThemeSwitcher = () => {
   const {systemTheme, theme, setTheme} = useTheme();

@@ -1,5 +1,5 @@
 "use client";
-import {Button, Card} from 'flowbite-react';
+import {Card} from 'flowbite-react';
 import Link from "next/link";
 import ProductReview from "@/components/Product/ProductReview";
 import React from "react";
@@ -20,7 +20,7 @@ const ProductCard = ({product}) => {
           </div>
         </div>
       }
-      <Link href={`/products/${product.id}`}>
+      <Link href={`/products/${product._id}`}>
         <h5
           className="text-xl font-semibold tracking-tight text-gray-900 hover:text-cyan-700 dark:text-white dark:hover:text-gray-300">
           {product.title}

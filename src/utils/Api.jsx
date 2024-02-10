@@ -1,8 +1,7 @@
 import axios from "axios";
 
 let urls = {
-  test: `http://localhost:3334`,
-  development: 'https://dummyjson.com',
+  development: 'http://localhost:3000/api/v1/',
   production: 'https://your-production-url.com/'
 }
 
